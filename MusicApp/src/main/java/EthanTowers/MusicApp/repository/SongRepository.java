@@ -1,5 +1,9 @@
 package EthanTowers.MusicApp.repository;
 
-public class SongRepository {
-    
+import org.springframework.data.repository.CrudRepository;
+
+import EthanTowers.MusicApp.model.Song;
+
+public interface SongRepository extends CrudRepository<Song, Long>{
+
 }
