@@ -1,5 +1,8 @@
 package EthanTowers.MusicApp.model;
 
+import java.net.URL;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,8 +31,10 @@ public class Song {
     private Artist artist;
 
     @ManyToMany
-    private Genre[] genres;
+    private List<Genre> genres;
 
     private int runtime;
+
+    private URL cover;
 
 }

@@ -1,27 +1,33 @@
 package EthanTowers.MusicApp.model;
 
+import java.net.URL;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "artist")
-public class Artist{
-
+@NoArgsConstructor
+@Table(name = "album")
+public class Album {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @OneToMany
+    private Song[] songs;
 
-    private String bio;
+    private Artist artist;
 
+    private URL cover;
 }
