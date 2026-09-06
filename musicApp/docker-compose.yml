@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - ./database/postgres/database/schema:/docker-entrypoint-initdb.d
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../Dockerfile.backend
+    command: mvn spring-boot:run
+    ports:
+      - "2800:2800"
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:postgresql://db:${DB_PORT}/${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile.frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
