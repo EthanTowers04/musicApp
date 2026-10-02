@@ -10,6 +10,8 @@ import lombok.Getter;
 @Getter
 public class SongRequestDTO {
 
+    private String title;
+
     private Long id;
 
     private ArtistDTO artist;

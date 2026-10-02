@@ -47,9 +47,7 @@ CREATE TABLE Song (
     runtime INT NOT NULL,
     cover VARCHAR(255),
     artist_id INT,
-    genre_id INT,
-    FOREIGN KEY(artist_id) REFERENCES Artist(id) ON DELETE SET NULL,
-    FOREIGN KEY(genre_id) REFERENCES Genre(id) ON DELETE SET NULL
+    FOREIGN KEY(artist_id) REFERENCES Artist(id) ON DELETE SET NULL
 );
 
 CREATE TABLE song_genres (
@@ -74,9 +72,9 @@ INSERT INTO Genre VALUES
 (DEFAULT,'Jazz');
 
 INSERT INTO Song VALUES
-(DEFAULT,'Song1',100,'https://example.com/cover1.jpg',1,1),
-(DEFAULT,'Song2',200,'https://example.com/cover2.jpg',2,2),
-(DEFAULT,'Song3',300,'https://example.com/cover3.jpg',3,3);
+(DEFAULT,'Song1',100,'https://example.com/cover1.jpg',1),
+(DEFAULT,'Song2',200,'https://example.com/cover2.jpg',2),
+(DEFAULT,'Song3',300,'https://example.com/cover3.jpg',3);
 
 INSERT INTO song_genres (song_id, genre_id) VALUES
 (1, 1),
