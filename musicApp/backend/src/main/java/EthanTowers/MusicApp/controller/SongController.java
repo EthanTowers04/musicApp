@@ -1,5 +1,7 @@
 package EthanTowers.MusicApp.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,11 @@ public class SongController {
     @GetMapping("/{id}")
     public SongRequestDTO getSongById(@PathVariable Long id){
         return this.songService.getSongById(id);
+    }
+
+    @GetMapping("/")
+    public List<SongRequestDTO> getAllSongs(){
+        return this.songService.getAllSongs();
     }
 
     @PostMapping("/")

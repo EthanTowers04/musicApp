@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS Login CASCADE;
 DROP TABLE IF EXISTS UserAccount CASCADE;
+DROP TABLE IF EXISTS album_songs CASCADE;
 DROP TABLE IF EXISTS song_genres CASCADE;
 DROP TABLE IF EXISTS Song CASCADE;
 DROP TABLE IF EXISTS Album CASCADE;
@@ -32,13 +33,13 @@ CREATE TABLE Album (
     title VARCHAR(100) NOT NULL,
     artist_id INT,
     cover VARCHAR(255),
-    songs INT[],
     FOREIGN KEY(artist_id) REFERENCES Artist(id) ON DELETE SET NULL
 );
 
 CREATE TABLE Genre (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL
+    name VARCHAR(50) UNIQUE NOT NULL,
+    description TEXT
 );
 
 CREATE TABLE Song (
@@ -48,6 +49,12 @@ CREATE TABLE Song (
     cover VARCHAR(255),
     artist_id INT,
     FOREIGN KEY(artist_id) REFERENCES Artist(id) ON DELETE SET NULL
+);
+
+CREATE TABLE album_songs (
+    album_id INT NOT NULL REFERENCES Album(id) ON DELETE CASCADE,
+    song_id INT NOT NULL UNIQUE REFERENCES Song(id) ON DELETE CASCADE,
+    PRIMARY KEY (album_id, song_id)
 );
 
 CREATE TABLE song_genres (
@@ -62,19 +69,30 @@ INSERT INTO Artist VALUES
 (DEFAULT,'Artist3','Bio for Artist3');
 
 INSERT INTO Album VALUES
-(DEFAULT,'Album1',1,'https://example.com/cover1.jpg',ARRAY[1,2]),
-(DEFAULT,'Album2',2,'https://example.com/cover2.jpg',ARRAY[3,4]),
-(DEFAULT,'Album3',3,'https://example.com/cover3.jpg',ARRAY[5,6]);
+(DEFAULT,'Album1',1,'https://example.com/cover1.jpg'),
+(DEFAULT,'Album2',2,'https://example.com/cover2.jpg'),
+(DEFAULT,'Album3',3,'https://example.com/cover3.jpg');
 
 INSERT INTO Genre VALUES
-(DEFAULT,'Rock'),
-(DEFAULT,'Pop'),
-(DEFAULT,'Jazz');
+(DEFAULT,'Rock', 'Rock music is a genre of popular music that originated as "rock and roll" in the United States in the late 1940s and early 1950s. It has since developed into a range of different styles and subgenres.'),
+(DEFAULT,'Pop', 'Pop music is a genre of popular music that originated in its modern form during the mid-1950s in the United States and the United Kingdom. The terms "popular music" and "pop music" are often used interchangeably, although the former describes all music that is popular and includes many disparate styles.'),
+(DEFAULT,'Jazz', 'Jazz is a music genre that originated in the African-American communities of New Orleans, United States, in the late 19th and early 20th centuries, with its roots in blues and ragtime. Jazz is seen by many as "Americas classical music". Since the 1920s Jazz Age, it has been recognized as a major form of musical expression. It then emerged in the form of independent traditional and popular musical styles, all linked by the common bonds of African-American and European-American musical parentage with a performance orientation. Jazz is characterized by swing and blue notes, call and response vocals, polyrhythms and improvisation.');
 
 INSERT INTO Song VALUES
 (DEFAULT,'Song1',100,'https://example.com/cover1.jpg',1),
 (DEFAULT,'Song2',200,'https://example.com/cover2.jpg',2),
-(DEFAULT,'Song3',300,'https://example.com/cover3.jpg',3);
+(DEFAULT,'Song3',300,'https://example.com/cover3.jpg',3),
+(DEFAULT,'Song4',240,'https://example.com/cover4.jpg',1),
+(DEFAULT,'Song5',260,'https://example.com/cover5.jpg',2),
+(DEFAULT,'Song6',280,'https://example.com/cover6.jpg',3);
+
+INSERT INTO album_songs (album_id, song_id) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5),
+(3, 6);
 
 INSERT INTO song_genres (song_id, genre_id) VALUES
 (1, 1),

@@ -1,5 +1,7 @@
 package EthanTowers.MusicApp.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import EthanTowers.MusicApp.DTO.ArtistRequestDTO;
@@ -19,6 +21,15 @@ public class ArtistService {
                 .name(artist.getName())
                 .bio(artist.getBio())
                 .build();
+    }
+
+    public List<ArtistRequestDTO> getAllArtists(){
+        return this.artistRepository.findAll().stream()
+            .map(artist -> ArtistRequestDTO.builder()
+                .name(artist.getName())
+                .bio(artist.getBio())
+                .build())
+            .toList();
     }
 
 }

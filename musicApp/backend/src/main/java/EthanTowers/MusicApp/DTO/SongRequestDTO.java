@@ -12,8 +12,6 @@ public class SongRequestDTO {
 
     private String title;
 
-    private Long id;
-
     private ArtistDTO artist;
 
     private List<GenreDTO> genres;

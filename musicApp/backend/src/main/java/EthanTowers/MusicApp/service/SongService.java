@@ -2,7 +2,9 @@ package EthanTowers.MusicApp.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import EthanTowers.MusicApp.DTO.ArtistDTO;
 import EthanTowers.MusicApp.DTO.GenreDTO;
@@ -38,12 +40,34 @@ public class SongService {
         .genres(songEntity.getGenres().stream()
             .map(genre -> GenreDTO.builder()
                 .name(genre.getName())
+                .description(genre.getDescription())
                 .build())
             .collect(Collectors.toList()))
         .runtime(songEntity.getRuntime())
         .cover(songEntity.getCover())
         .build();
 
+    }
+
+    public List<SongRequestDTO> getAllSongs(){
+        return StreamSupport
+            .stream(this.songRepository.findAll().spliterator(), false)
+            .map(song -> SongRequestDTO.builder()
+                .title(song.getTitle())
+                .artist(ArtistDTO.builder()
+                    .name(song.getArtist().getName())
+                    .bio(song.getArtist().getBio())
+                    .build())
+                .genres(song.getGenres().stream()
+                    .map(genre -> GenreDTO.builder()
+                        .name(genre.getName())
+                        .description(genre.getDescription())
+                        .build())
+                    .collect(Collectors.toList()))
+                .runtime(song.getRuntime())
+                .cover(song.getCover())
+                .build())
+            .collect(Collectors.toList());
     }
 
     public Song createSong(SongCreateDTO songDTO){

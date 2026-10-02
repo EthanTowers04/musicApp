@@ -9,5 +9,7 @@ public class GenreDTO{
 
     private String name;
 
+    private String description;
+
 
 }
