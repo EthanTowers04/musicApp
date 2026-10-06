@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +26,10 @@ public class GenreController {
     @GetMapping("/")
     public List<GenreDTO> getAllGenres(){
         return this.genreService.getAllGenres();
+    }
+
+    @PostMapping("/")
+    public GenreDTO createGenre(GenreDTO params){
+        return this.genreService.createGenre(params);
     }
 }

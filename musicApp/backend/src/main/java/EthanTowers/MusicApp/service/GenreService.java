@@ -30,4 +30,16 @@ public class GenreService {
                 .build())
             .toList();
     }
+
+    public GenreDTO createGenre(GenreDTO params){
+        Genre genre = Genre.builder()
+            .name(params.getName())
+            .description(params.getDescription())
+            .build();
+        this.genreRepository.save(genre);
+        return GenreDTO.builder()
+            .name(genre.getName())
+            .description(genre.getDescription())
+            .build();
+    }
 }
